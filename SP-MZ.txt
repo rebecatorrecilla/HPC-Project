@@ -1,0 +1,123 @@
+SP-MZ 4 nodes
+
+#!/bin/bash
+#SBATCH --job-name=sp-mz_4n
+#SBATCH --output=sp-mz_4n_%j.out
+#SBATCH --error=sp-mz_4n_%j.err
+#SBATCH --nodes=4
+#SBATCH --qos=gp_debug
+#SBATCH --account=nct_321
+#SBATCH --ear=on
+#SBATCH --constraint=perfparanoid
+#SBATCH --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db
+
+export NAS_PATH=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/bin
+cp /gpfs/scratch/nct_321/inputsp-mz.data .
+
+# Configuración 1: MPI puro (448 procesos, 1 thread c/u)
+srun --ntasks=448 --cpus-per-task=1 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 2: 2 threads por proceso (224x2)
+srun --ntasks=224 --cpus-per-task=2 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 3: 4 threads por proceso (112x4)
+srun --ntasks=112 --cpus-per-task=4 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 4: 8 threads por proceso (56x8)
+srun --ntasks=56  --cpus-per-task=8 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 5: 16 threads por proceso (28x16)
+srun --ntasks=28  --cpus-per-task=16 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 6: 28 threads por proceso (16x28)
+srun --ntasks=16  --cpus-per-task=28 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 7: 56 threads por proceso (8x56)
+srun --ntasks=8   --cpus-per-task=56 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 8: OpenMP puro (4 procesos con 112 threads c/u)
+srun --ntasks=4   --cpus-per-task=112 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+---------------------------------------------------
+6 nodes
+
+#!/bin/bash
+#SBATCH --job-name=sp-mz_6n
+#SBATCH --output=sp-mz_6n_%j.out
+#SBATCH --error=sp-mz_6n_%j.err
+#SBATCH --nodes=6
+#SBATCH --qos=gp_debug
+#SBATCH --account=nct_321
+#SBATCH --ear=on
+#SBATCH --constraint=perfparanoid
+#SBATCH --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db
+
+export NAS_PATH=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/bin
+cp /gpfs/scratch/nct_321/inputsp-mz.data .
+
+# Total de cores disponibles: 6 nodos x 112 cores = 672 cores
+
+# Configuración 1: MPI puro (672 procesos, 1 thread c/u)
+srun --ntasks=672 --cpus-per-task=1 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 2: 2 threads por proceso (336 procesos)
+srun --ntasks=336 --cpus-per-task=2 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 3: 4 threads por proceso (168 procesos)
+srun --ntasks=168 --cpus-per-task=4 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 4: 8 threads por proceso (84 procesos)
+srun --ntasks=84  --cpus-per-task=8 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 5: 16 threads por proceso (42 procesos)
+srun --ntasks=42  --cpus-per-task=16 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 6: 28 threads por proceso (24 procesos)
+srun --ntasks=24  --cpus-per-task=28 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 7: 56 threads por proceso (12 procesos)
+srun --ntasks=12  --cpus-per-task=56 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 8: OpenMP puro (6 procesos con 112 threads c/u)
+srun --ntasks=6   --cpus-per-task=112 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+-------------------------------------------
+8 nodes
+
+#!/bin/bash
+#SBATCH --job-name=sp-mz_8n
+#SBATCH --output=sp-mz_8n_%j.out
+#SBATCH --error=sp-mz_8n_%j.err
+#SBATCH --nodes=8
+#SBATCH --qos=gp_debug
+#SBATCH --account=nct_321
+#SBATCH --ear=on
+#SBATCH --constraint=perfparanoid
+#SBATCH --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db
+
+export NAS_PATH=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/bin
+cp /gpfs/scratch/nct_321/inputsp-mz.data .
+
+# Configuración 1: MPI puro (896 procesos, 1 thread c/u)
+srun --ntasks=896 --cpus-per-task=1 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 2: 2 threads por proceso (448x2)
+srun --ntasks=448 --cpus-per-task=2 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 3: 4 threads por proceso (224x4)
+srun --ntasks=224 --cpus-per-task=4 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 4: 8 threads por proceso (112x8)
+srun --ntasks=112  --cpus-per-task=8 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 5: 16 threads por proceso (56x16)
+srun --ntasks=56  --cpus-per-task=16 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 6: 28 threads por proceso (32x28)
+srun --ntasks=32  --cpus-per-task=28 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 7: 56 threads por proceso (16x56)
+srun --ntasks=16   --cpus-per-task=56 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data
+
+# Configuración 8: OpenMP puro (8 procesos con 112 threads c/u)
+srun --ntasks=8   --cpus-per-task=112 --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/sp-mz.db $NAS_PATH/sp-mz.D.x < inputsp-mz.data

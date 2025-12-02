@@ -1,0 +1,297 @@
+#!/bin/bash
+#SBATCH --job-name=bt-mz-mpi-4n
+#SBATCH --output=bt-mz-mpi-4n.out
+#SBATCH --error=bt-mz-mpi-4n.err
+#SBATCH --nodes=4
+#SBATCH --ntasks=48
+#SBATCH --cpus-per-task=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --qos=gp_debug
+#SBATCH --account=nct_321
+#SBATCH --ear=on
+#SBATCH --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/bt-mz.db
+#SBATCH --constraint=perfparanoid
+
+export OMP_NUM_THREADS=1
+export NAS_PATH=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/bin
+srun $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+
+
+#!/bin/bash
+#SBATCH --job-name=bt-mz-int1-4n
+#SBATCH --output=bt-mz-int1-4n.out
+#SBATCH --error=bt-mz-int1-4n.err
+#SBATCH --nodes=4
+#SBATCH --ntasks=24
+#SBATCH --cpus-per-task=2
+#SBATCH --ntasks-per-node=1
+#SBATCH --qos=gp_debug
+#SBATCH --account=nct_321
+#SBATCH --ear=on
+#SBATCH --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/bt-mz.db
+#SBATCH --constraint=perfparanoid
+
+export OMP_NUM_THREADS=2
+export NAS_PATH=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/bin
+srun $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+
+
+#!/bin/bash
+#SBATCH --job-name=bt-mz-int2-4n
+#SBATCH --output=bt-mz-int2-4n.out
+#SBATCH --error=bt-mz-int2-4n.err
+#SBATCH --nodes=4
+#SBATCH --ntasks=8
+#SBATCH --cpus-per-task=6
+#SBATCH --ntasks-per-node=1
+#SBATCH --qos=gp_debug
+#SBATCH --account=nct_321
+#SBATCH --ear=on
+#SBATCH --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/bt-mz.db
+#SBATCH --constraint=perfparanoid
+
+export OMP_NUM_THREADS=6
+export NAS_PATH=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/bin
+srun $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+
+
+#!/bin/bash
+#SBATCH --job-name=bt-mz-int3-4n
+#SBATCH --output=bt-mz-int3-4n.out
+#SBATCH --error=bt-mz-int3-4n.err
+#SBATCH --nodes=4
+#SBATCH --ntasks=4
+#SBATCH --cpus-per-task=12
+#SBATCH --ntasks-per-node=1
+#SBATCH --qos=gp_debug
+#SBATCH --account=nct_321
+#SBATCH --ear=on
+#SBATCH --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/bt-mz.db
+#SBATCH --constraint=perfparanoid
+
+export OMP_NUM_THREADS=12
+export NAS_PATH=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/bin
+srun $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+
+
+#!/bin/bash
+#SBATCH --job-name=bt-mz-omp-4n
+#SBATCH --output=bt-mz-omp-4n.out
+#SBATCH --error=bt-mz-omp-4n.err
+#SBATCH --nodes=4
+#SBATCH --ntasks=2
+#SBATCH --cpus-per-task=24
+#SBATCH --ntasks-per-node=1
+#SBATCH --qos=gp_debug
+#SBATCH --account=nct_321
+#SBATCH --ear=on
+#SBATCH --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/bt-mz.db
+#SBATCH --constraint=perfparanoid
+
+export OMP_NUM_THREADS=24
+export NAS_PATH=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/bin
+srun $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+
+----------------------------------------------------------
+
+
+#!/bin/bash
+#SBATCH --job-name=bt-mz_4n
+#SBATCH --output=bt-mz_4n_%j.out
+#SBATCH --error=bt-mz_4n_%j.err
+#SBATCH --nodes=4
+#SBATCH --qos=gp_debug
+#SBATCH --account=nct_321
+#SBATCH --ear=on
+#SBATCH --constraint=perfparanoid
+#SBATCH --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/bt-mz.db
+
+export NAS_PATH=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/bin
+cp /gpfs/scratch/nct_321/inputbt-mz.data .
+
+srun --ntasks=448 --cpus-per-task=1  --ear-user-label=bt_4n_mpi     $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+srun --ntasks=224 --cpus-per-task=2  --ear-user-label=bt_4n_omp2    $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+srun --ntasks=112 --cpus-per-task=4  --ear-user-label=bt_4n_omp4    $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+srun --ntasks=56  --cpus-per-task=8  --ear-user-label=bt_4n_omp8    $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+srun --ntasks=28  --cpus-per-task=16 --ear-user-label=bt_4n_omp16   $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+srun --ntasks=16  --cpus-per-task=28 --ear-user-label=bt_4n_omp28   $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+srun --ntasks=8   --cpus-per-task=56 --ear-user-label=bt_4n_omp56   $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+srun --ntasks=4   --cpus-per-task=112 --ear-user-label=bt_4n_openmp $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+
+-------------------
+
+#!/bin/bash
+#SBATCH --job-name=bt-mz_4n
+#SBATCH --output=bt-mz_4n_%j.out
+#SBATCH --error=bt-mz_4n_%j.err
+#SBATCH --nodes=4
+#SBATCH --qos=gp_debug
+#SBATCH --account=nct_321
+#SBATCH --ear=on
+#SBATCH --constraint=perfparanoid
+#SBATCH --ear-user-db=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/bt-mz.db
+
+export NAS_PATH=$HOME/proyecto/NPB3.4.3-MZ/NPB3.4-MZ-MPI/bin
+cp /gpfs/scratch/nct_321/inputbt-mz.data .
+
+export EARL_USER_TAG=bt_4n_mpi
+srun --ntasks=448 --cpus-per-task=1 $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+
+export EARL_USER_TAG=bt_4n_omp2
+srun --ntasks=224 --cpus-per-task=2 $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+
+export EARL_USER_TAG=bt_4n_omp4
+srun --ntasks=112 --cpus-per-task=4 $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+
+export EARL_USER_TAG=bt_4n_omp8
+srun --ntasks=56 --cpus-per-task=8 $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+
+export EARL_USER_TAG=bt_4n_omp16
+srun --ntasks=28 --cpus-per-task=16 $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+
+export EARL_USER_TAG=bt_4n_omp28
+srun --ntasks=16 --cpus-per-task=28 $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+
+export EARL_USER_TAG=bt_4n_omp56
+srun --ntasks=8 --cpus-per-task=56 $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+
+export EARL_USER_TAG=bt_4n_openmp
+srun --ntasks=4 --cpus-per-task=112 $NAS_PATH/bt-mz.D.x < inputbt-mz.data
+
+
+
+
+---------------------------------------------
+
+[nct01062@glogin1 NPB3.4-MZ-MPI]$ eacct 19105501
+
+By default only the first 20 jobs are retrieved.
+
+    JOB-STEP USER       APPLICATION      POLICY NODES AVG/DEF/IMC(GHz) TIME(s)    POWER(W) GBS     CPI   ENERGY(J)    GFLOPS/W IO(MBs) MPI%  G-POW (T/U)     G-FREQ  G-UTIL(G/MEM)
+19105501-sb   nct01062   bt-mz_4n         NP     4     2.89/2.00/---    1215.00    832.26   ---     ---   4044776      ---      ---     ---   ---             ---     ---
+19105501-7    nct01062   bt-mz_4n         MO     4     2.91/2.00/2.11   192.24     892.84   72.98   0.48  686553       0.0026   0.0     4.9   0.00/---        ---     ---
+19105501-6    nct01062   bt-mz_4n         MO     4     2.90/2.00/1.90   132.17     891.77   39.18   0.35  471475       0.0075   0.0     6.7   0.00/---        ---     ---
+19105501-5    nct01062   bt-mz_4n         MO     4     2.89/2.00/1.60   112.75     896.28   48.44   0.30  404224       0.0174   0.0     9.2   0.00/---        ---     ---
+19105501-4    nct01062   bt-mz_4n         MO     4     2.90/2.00/1.60   116.28     894.16   57.25   0.28  415900       0.0294   0.0     17.4  0.00/---        ---     ---
+19105501-3    nct01062   bt-mz_4n         MO     4     2.87/2.00/1.44   103.36     888.72   62.45   0.27  367438       0.0666   0.1     10.8  0.00/---        ---     ---
+19105501-2    nct01062   bt-mz_4n         MO     4     2.83/2.00/1.43   101.25     896.23   75.18   0.27  362978       0.1349   0.1     9.6   0.00/---        ---     ---
+19105501-1    nct01062   bt-mz_4n         MO     4     2.88/2.00/1.26   107.77     905.59   109.09  0.28  390390       0.2512   0.1     13.4  0.00/---        ---     ---
+19105501-0    nct01062   bt-mz_4n         MO     4     2.78/2.00/1.29   177.33     893.63   84.42   0.26  633894       0.3087   0.1     46.5  0.00/---        ---     ---
+19096540-sb   nct01062   bt-mz_4n         NP     4     2.89/2.00/---    1111.00    866.62   ---     ---   3851266      ---      ---     ---   ---             ---     ---
+19096540-7    nct01062   bt-mz_4n         MO     4     2.91/2.00/2.12   188.24     900.64   74.24   0.47  678134       0.0027   0.0     3.6   0.00/---        ---     ---
+19096540-6    nct01062   bt-mz_4n         MO     4     2.90/2.00/1.91   132.17     888.28   39.15   0.35  469605       0.0076   0.0     6.8   0.00/---        ---     ---
+19096540-5    nct01062   bt-mz_4n         MO     4     2.89/2.00/1.62   112.72     892.25   48.43   0.30  402289       0.0175   0.0     9.2   0.00/---        ---     ---
+19096540-4    nct01062   bt-mz_4n         MO     4     2.90/2.00/1.63   117.45     893.10   57.16   0.28  419583       0.0291   0.0     18.0  0.00/---        ---     ---
+19096540-3    nct01062   bt-mz_4n         MO     4     2.83/2.00/1.52   101.73     895.27   63.52   0.27  364305       0.0672   0.1     9.3   0.00/---        ---     ---
+19096540-2    nct01062   bt-mz_4n         MO     4     2.82/2.00/1.44   99.82      896.32   76.27   0.27  357901       0.1369   0.1     8.2   0.00/---        ---     ---
+19096540-1    nct01062   bt-mz_4n         MO     4     2.86/2.00/1.31   105.76     899.87   110.75  0.27  380688       0.2578   0.2     11.7  0.00/---        ---     ---
+19096540-0    nct01062   bt-mz_4n         MO     4     2.79/2.00/1.29   173.50     894.54   86.20   0.26  620862       0.3158   0.1     45.3  0.00/---        ---     ---
+19096473-sb   nct01062   bt-mz_4n         NP     4     3.00/2.00/---    1.00       348.37   ---     ---   1393         ---      ---     ---   ---             ---     ---
+19048125-sb   nct01062   bt-mz            NP     4     2.98/2.00/---    3544.00    532.07   ---     ---   7542679      ---      ---     ---   ---             ---     ---
+19048125-0    nct01062   bt-mz            MO     4     2.92/2.00/2.41   3540.34    532.06   0.00    0.25  7534665      0.0001   0.0     5.1   0.00/---        ---     ---
+
+
+--------------------------------------------------------
+
+    JOB-STEP USER       APPLICATION      POLICY NODES AVG/DEF/IMC(GHz) TIME(s)    POWER(W) GBS     CPI   ENERGY(J)    GFLOPS/W IO(MBs) MPI%  G-POW (T/U)     G-FREQ  G-UTIL(G/MEM)
+19166100-6    nct01062   bt-mz_4n         MO     4     2.90/2.00/1.87   133.17     858.58   38.89   0.35  457343       0.0078   0.0     7.1   0.00/---        ---     ---
+19166100-5    nct01062   bt-mz_4n         MO     4     2.89/2.00/1.58   113.85     863.19   47.94   0.30  393100       0.0179   0.0     9.6   0.00/---        ---     ---
+19166100-4    nct01062   bt-mz_4n         MO     4     2.89/2.00/1.59   117.80     863.84   56.69   0.28  407056       0.0300   0.0     17.7  0.00/---        ---     ---
+19166100-3    nct01062   bt-mz_4n         MO     4     2.84/2.00/1.47   103.21     860.88   62.58   0.27  355393       0.0689   0.1     10.1  0.00/---        ---     ---
+19166100-2    nct01062   bt-mz_4n         MO     4     2.84/2.00/1.37   101.21     865.34   75.21   0.27  350308       0.1398   0.1     9.1   0.00/---        ---     ---
+19166100-1    nct01062   bt-mz_4n         MO     4     2.88/2.00/1.23   107.60     870.79   109.17  0.28  374796       0.2618   0.2     12.6  0.00/---        ---     ---
+19166100-0    nct01062   bt-mz_4n         MO     4     2.77/2.00/1.29   177.14     860.43   84.25   0.26  609641       0.3209   0.1     46.3  0.00/---        ---     ---
+19105501-sb   nct01062   bt-mz_4n         NP     4     2.89/2.00/---    1215.00    832.26   ---     ---   4044776      ---      ---     ---   ---             ---     ---
+19105501-7    nct01062   bt-mz_4n         MO     4     2.91/2.00/2.11   192.24     892.84   72.98   0.48  686553       0.0026   0.0     4.9   0.00/---        ---     ---
+19105501-6    nct01062   bt-mz_4n         MO     4     2.90/2.00/1.90   132.17     891.77   39.18   0.35  471475       0.0075   0.0     6.7   0.00/---        ---     ---
+19105501-5    nct01062   bt-mz_4n         MO     4     2.89/2.00/1.60   112.75     896.28   48.44   0.30  404224       0.0174   0.0     9.2   0.00/---        ---     ---
+19105501-4    nct01062   bt-mz_4n         MO     4     2.90/2.00/1.60   116.28     894.16   57.25   0.28  415900       0.0294   0.0     17.4  0.00/---        ---     ---
+19105501-3    nct01062   bt-mz_4n         MO     4     2.87/2.00/1.44   103.36     888.72   62.45   0.27  367438       0.0666   0.1     10.8  0.00/---        ---     ---
+19105501-2    nct01062   bt-mz_4n         MO     4     2.83/2.00/1.43   101.25     896.23   75.18   0.27  362978       0.1349   0.1     9.6   0.00/---        ---     ---
+19105501-1    nct01062   bt-mz_4n         MO     4     2.88/2.00/1.26   107.77     905.59   109.09  0.28  390390       0.2512   0.1     13.4  0.00/---        ---     ---
+19105501-0    nct01062   bt-mz_4n         MO     4     2.78/2.00/1.29   177.33     893.63   84.42   0.26  633894       0.3087   0.1     46.5  0.00/---        ---     ---
+19096540-sb   nct01062   bt-mz_4n         NP     4     2.89/2.00/---    1111.00    866.62   ---     ---   3851266      ---      ---     ---   ---             ---     ---
+19096540-7    nct01062   bt-mz_4n         MO     4     2.91/2.00/2.12   188.24     900.64   74.24   0.47  678134       0.0027   0.0     3.6   0.00/---        ---     ---
+19096540-6    nct01062   bt-mz_4n         MO     4     2.90/2.00/1.91   132.17     888.28   39.15   0.35  469605       0.0076   0.0     6.8   0.00/---        ---     ---
+19096540-5    nct01062   bt-mz_4n         MO     4     2.89/2.00/1.62   112.72     892.25   48.43   0.30  402289       0.0175   0.0     9.2   0.00/---        ---     ---
+19096540-4    nct01062   bt-mz_4n         MO     4     2.90/2.00/1.63   117.45     893.10   57.16   0.28  419583       0.0291   0.0     18.0  0.00/---        ---     ---
+19096540-3    nct01062   bt-mz_4n         MO     4     2.83/2.00/1.52   101.73     895.27   63.52   0.27  364305       0.0672   0.1     9.3   0.00/---        ---     ---
+19096540-2    nct01062   bt-mz_4n         MO     4     2.82/2.00/1.44   99.82      896.32   76.27   0.27  357901       0.1369   0.1     8.2   0.00/---        ---     ---
+19096540-1    nct01062   bt-mz_4n         MO     4     2.86/2.00/1.31   105.76     899.87   110.75  0.27  380688       0.2578   0.2     11.7  0.00/---        ---     ---
+19096540-0    nct01062   bt-mz_4n         MO     4     2.79/2.00/1.29   173.50     894.54   86.20   0.26  620862       0.3158   0.1     45.3  0.00/---        ---     ---
+
+
+
+------------------------------------------------------
+
+
+    JOB-STEP USER       APPLICATION      POLICY NODES AVG/DEF/IMC(GHz) TIME(s)    POWER(W) GBS     CPI   ENERGY(J)    GFLOPS/W IO(MBs) MPI%  G-POW (T/U)     G-FREQ  G-UTIL(G/MEM)
+19168331-sb   nct01062   bt-mz_4n         NP     4     2.87/2.00/---    1131.00    867.89   ---     ---   3926337      ---      ---     ---   ---             ---     ---
+19168331-7    nct01062   bt-mz_4n         MO     4     2.91/2.00/2.11   190.25     902.49   73.47   0.48  686807       0.0026   0.0     3.7   0.00/---        ---     ---
+19168331-6    nct01062   bt-mz_4n         MO     4     2.88/2.00/1.89   133.24     886.58   38.86   0.34  472493       0.0076   0.0     5.5   0.00/---        ---     ---
+19168331-5    nct01062   bt-mz_4n         MO     4     2.87/2.00/1.63   112.61     890.43   48.44   0.29  401073       0.0176   0.0     8.9   0.00/---        ---     ---
+19168331-4    nct01062   bt-mz_4n         MO     4     2.86/2.00/1.64   116.49     901.89   57.32   0.27  420230       0.0291   0.0     16.9  0.00/---        ---     ---
+19168331-3    nct01062   bt-mz_4n         MO     4     2.79/2.00/1.58   103.74     897.37   60.93   0.27  372261       0.0670   0.1     12.2  0.00/---        ---     ---
+19168331-2    nct01062   bt-mz_4n         MO     4     2.75/2.00/1.57   100.22     902.59   74.87   0.26  361830       0.1354   0.1     7.8   0.00/---        ---     ---
+19168331-1    nct01062   bt-mz_4n         MO     4     2.86/2.00/1.27   106.10     907.46   109.86  0.27  385124       0.2551   0.2     11.3  0.00/---        ---     ---
+19168331-0    nct01062   bt-mz_4n         MO     4     2.75/2.00/1.28   175.66     898.66   85.04   0.25  631445       0.3104   0.1     45.3  0.00/---        ---     ---
+19166100-sb   nct01062   bt-mz_4n         NP     4     2.89/2.00/---    1109.00    842.51   ---     ---   3737363      ---      ---     ---   ---             ---     ---
+19166100-7    nct01062   bt-mz_4n         MO     4     2.91/2.00/2.09   190.24     871.53   75.83   0.48  663211       0.0027   0.0     3.4   0.00/---        ---     ---
+19166100-6    nct01062   bt-mz_4n         MO     4     2.90/2.00/1.87   133.17     858.58   38.89   0.35  457343       0.0078   0.0     7.1   0.00/---        ---     ---
+19166100-5    nct01062   bt-mz_4n         MO     4     2.89/2.00/1.58   113.85     863.19   47.94   0.30  393100       0.0179   0.0     9.6   0.00/---        ---     ---
+19166100-4    nct01062   bt-mz_4n         MO     4     2.89/2.00/1.59   117.80     863.84   56.69   0.28  407056       0.0300   0.0     17.7  0.00/---        ---     ---
+19166100-3    nct01062   bt-mz_4n         MO     4     2.84/2.00/1.47   103.21     860.88   62.58   0.27  355393       0.0689   0.1     10.1  0.00/---        ---     ---
+19166100-2    nct01062   bt-mz_4n         MO     4     2.84/2.00/1.37   101.21     865.34   75.21   0.27  350308       0.1398   0.1     9.1   0.00/---        ---     ---
+19166100-1    nct01062   bt-mz_4n         MO     4     2.88/2.00/1.23   107.60     870.79   109.17  0.28  374796       0.2618   0.2     12.6  0.00/---        ---     ---
+19166100-0    nct01062   bt-mz_4n         MO     4     2.77/2.00/1.29   177.14     860.43   84.25   0.26  609641       0.3209   0.1     46.3  0.00/---        ---     ---
+19105501-sb   nct01062   bt-mz_4n         NP     4     2.89/2.00/---    1215.00    832.26   ---     ---   4044776      ---      ---     ---   ---             ---     ---
+19105501-7    nct01062   bt-mz_4n         MO     4     2.91/2.00/2.11   192.24     892.84   72.98   0.48  686553       0.0026   0.0     4.9   0.00/---        ---     ---
+19105501-6    nct01062   bt-mz_4n         MO     4     2.90/2.00/1.90   132.17     891.77   39.18   0.35  471475       0.0075   0.0     6.7   0.00/---        ---     ---
+19105501-5    nct01062   bt-mz_4n         MO     4     2.89/2.00/1.60   112.75     896.28   48.44   0.30  404224       0.0174   0.0     9.2   0.00/---        ---     ---
+19105501-4    nct01062   bt-mz_4n         MO     4     2.90/2.00/1.60   116.28     894.16   57.25   0.28  415900       0.0294   0.0     17.4  0.00/---        ---     ---
+19105501-3    nct01062   bt-mz_4n         MO     4     2.87/2.00/1.44   103.36     888.72   62.45   0.27  367438       0.0666   0.1     10.8  0.00/---        ---     ---
+19105501-2    nct01062   bt-mz_4n         MO     4     2.83/2.00/1.43   101.25     896.23   75.18   0.27  362978       0.1349   0.1     9.6   0.00/---        ---     ---
+19105501-1    nct01062   bt-mz_4n         MO     4     2.88/2.00/1.26   107.77     905.59   109.09  0.28  390390       0.2512   0.1     13.4  0.00/---        ---     ---
+19105501-0    nct01062   bt-mz_4n         MO     4     2.78/2.00/1.29   177.33     893.63   84.42   0.26  633894       0.3087   0.1     46.5  0.00/---   
+
+
+
+---------------------------------------------------------
+bt-mz.db.gs06r3b22.time.csv corresponde seguramente al srun con 448 tasks y 1 cpu (mucho mpi nada de openmpi)
+
+----------------------------------------------
+
+BT-MZ 6 NODES
+    JOB-STEP USER       APPLICATION      POLICY NODES AVG/DEF/IMC(GHz) TIME(s)    POWER(W) GBS     CPI   ENERGY(J)    GFLOPS/W IO(MBs) MPI%  G-POW (T/U)     G-FREQ  G-UTIL(G/MEM)
+19171686-sb   nct01062   bt-mz_6n         NP     6     2.91/2.00/---    844.00     846.82   ---     ---   4288292      ---      ---     ---   ---             ---     ---
+19171686-7    nct01062   bt-mz_6n         MO     6     2.92/2.00/2.16   127.17     888.40   63.43   0.45  677864       0.0027   0.0     6.0   0.00/---        ---     ---
+19171686-6    nct01062   bt-mz_6n         MO     6     2.90/2.00/1.96   89.12      879.01   35.44   0.34  470006       0.0076   0.0     9.2   0.00/---        ---     ---
+19171686-5    nct01062   bt-mz_6n         MO     6     2.90/2.00/1.69   77.72      878.36   42.74   0.29  409606       0.0172   0.0     20.3  0.00/---        ---     ---
+19171686-4    nct01062   bt-mz_6n         MO     6     2.90/2.00/1.67   78.96      870.37   51.88   0.27  412355       0.0296   0.1     19.3  0.00/---        ---     ---
+19171686-3    nct01062   bt-mz_6n         MO     6     2.87/2.00/1.50   69.23      875.99   55.35   0.27  363877       0.0673   0.1     11.8  0.00/---        ---     ---
+19171686-2    nct01062   bt-mz_6n         MO     6     2.87/2.00/1.40   67.77      880.33   67.20   0.27  357971       0.1369   0.2     10.3  0.00/---        ---     ---
+19171686-1    nct01062   bt-mz_6n         MO     6     2.91/2.00/1.39   87.77      880.52   76.60   0.26  463741       0.2114   0.3     30.6  0.00/---        ---     ---
+19171686-0    nct01062   bt-mz_6n         MO     6     2.83/2.00/1.07   172.69     875.47   50.23   0.24  907105       0.2150   0.1     62.9  0.00/---        ---     ---
+19168331-sb   nct01062   bt-mz_4n         NP     4     2.87/2.00/---    1131.00    867.89   ---     ---   3926337      ---      ---     ---   ---             ---     ---
+19168331-7    nct01062   bt-mz_4n         MO     4     2.91/2.00/2.11   190.25     902.49   73.47   0.48  686807       0.0026   0.0     3.7   0.00/---        ---     ---
+19168331-6    nct01062   bt-mz_4n         MO     4     2.88/2.00/1.89   133.24     886.58   38.86   0.34  472493       0.0076   0.0     5.5   0.00/---        ---     ---
+19168331-5    nct01062   bt-mz_4n         MO     4     2.87/2.00/1.63   112.61     890.43   48.44   0.29  401073       0.0176   0.0     8.9   0.00/---        ---     ---
+19168331-4    nct01062   bt-mz_4n         MO     4     2.86/2.00/1.64   116.49     901.89   57.32   0.27  420230       0.0291   0.0     16.9  0.00/---        ---     ---
+19168331-3    nct01062   bt-mz_4n         MO     4     2.79/2.00/1.58   103.74     897.37   60.93   0.27  372261       0.0670   0.1     12.2  0.00/---        ---     ---
+19168331-2    nct01062   bt-mz_4n         MO     4     2.75/2.00/1.57   100.22     902.59   74.87   0.26  361830       0.1354   0.1     7.8   0.00/---        ---     ---
+19168331-1    nct01062   bt-mz_4n         MO     4     2.86/2.00/1.27   106.10     907.46   109.86  0.27  385124       0.2551   0.2     11.3  0.00/---        ---     ---
+19168331-0    nct01062   bt-mz_4n         MO     4     2.75/2.00/1.28   175.66     898.66   85.04   0.25  631445       0.3104   0.1     45.3  0.00/---        ---     ---
+19166100-sb   nct01062   bt-mz_4n         NP     4     2.89/2.00/---    1109.00    842.51   ---     ---   3737363      ---      ---     ---   ---             ---     ---
+19166100-7    nct01062   bt-mz_4n         MO     4     2.91/2.00/2.09   190.24     871.53   75.83   0.48  663211       0.0027   0.0     3.4   0.00/---        ---     ---
+19166100-6    nct01062   bt-mz_4n         MO     4     2.90/2.00/1.87   133.17     858.58   38.89   0.35  457343       0.0078   0.0     7.1   0.00/---        ---     ---
+19166100-5    nct01062   bt-mz_4n         MO     4     2.89/2.00/1.58   113.85     863.19   47.94   0.30  393100       0.0179   0.0     9.6   0.00/---        ---     ---
+19166100-4    nct01062   bt-mz_4n         MO     4     2.89/2.00/1.59   117.80     863.84   56.69   0.28  407056       0.0300   0.0     17.7  0.00/---        ---     ---
+19166100-3    nct01062   bt-mz_4n         MO     4     2.84/2.00/1.47   103.21     860.88   62.58   0.27  355393       0.0689   0.1     10.1  0.00/---        ---     ---
+19166100-2    nct01062   bt-mz_4n         MO     4     2.84/2.00/1.37   101.21     865.34   75.21   0.27  350308       0.1398   0.1     9.1   0.00/---        ---     ---
+19166100-1    nct01062   bt-mz_4n         MO     4     2.88/2.00/1.23   107.60     870.79   109.17  0.28  374796       0.2618   0.2     12.6  0.00/---        ---     ---
+19166100-0    nct01062   bt-mz_4n         MO     4     2.77/2.00/1.29   177.14     860.43   84.25   0.26  609641       0.3209   0.1     46.3  0.00/---        ---     ---
+
+
+
+
+
